@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+  foxtan:
+    container_name: foxtan
+    build: .
+    restart: unless-stopped
+    volumes:
+      - foxtan-files:/app/public/
+    environment:
+      FOXTAN_EXTERNAL_URL: http://foxtan
+      FOXTAN_DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@foxtan-db:5432/foxtantest
+      FOXTAN_REDIS_URL: redis://foxtan-redis:6379
+      DEBUG: ${DEBUG}
+    ports:
+      - "6749:6749"
+    depends_on:
+      - postgresql
+      - redis
+    networks:
+      - foxnet
+
+  postgresql:
+    container_name: foxtan-db
+    image: postgres:alpine
+    restart: always
+    volumes:
+      - foxtan-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: foxtantest
+    ports:
+      - "5432:5432"
+    networks:
+      - foxnet
+
+  redis:
+    container_name: foxtan-redis
+    image: redis:alpine
+    restart: always
+    volumes:
+      - foxtan-redis:/var/lib/redis
+      - foxtan-redis:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - foxnet
+
+networks:
+  foxnet:
+
+volumes:
+  foxtan-db: {}
+  foxtan-files: {}
+  foxtan-redis: {}

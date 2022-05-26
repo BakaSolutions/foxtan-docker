@@ -1,0 +1,3 @@
+[submodule "foxtan"]
+	path = foxtan
+	url = https://github.com/BakaSolutions/foxtan.git
