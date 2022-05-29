@@ -15,8 +15,8 @@ RUN apt install -y ffmpeg
 # RUN apk add --no-cache ffmpeg
 # RUN npm i -g node-gyp
 
-COPY ./foxtan/ ./.dockerignore ./config.js ./
-ENV NODE_ENV=production
+COPY ./foxtan/ ./config.js ./
 RUN npm install
 EXPOSE 6749
-CMD ["npm", "start"]
+COPY ./docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
