@@ -8,8 +8,9 @@ it was decided to dockerize the engine.
 $ git -v
 $ docker -v
 $ docker-compose -v
-$ git clone https://github.com/BakaSolutions/foxtan.git foxtan && cd foxtan
+$ git clone https://github.com/BakaSolutions/foxtan-docker.git foxtan && cd foxtan
 $ git submodule init && git submodule update
-$ git submodule foreach npm install
+$ # git submodule foreach npm install
+$ cp .env.template .env
 $ docker-compose up --build -d
 ```
