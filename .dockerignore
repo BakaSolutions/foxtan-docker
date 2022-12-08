@@ -1,9 +1,9 @@
-**/.idea
-**/.nyc_output
-**/node_modules
-
-# Engine's output
-foxtan/res/**/*
-foxtan/src/*.*
-foxtan/src/thumb/*.*
-foxtan/config*
+**/.env
+./foxtan/config.*
+./foxtan/.git/
+./foxtan/.idea/
+./foxtan/.nyc_output/
+./foxtan/node_modules/
+./foxtan/public/res/**/*
+./foxtan/public/src/*.*
+./foxtan/public/src/thumb/*.*
