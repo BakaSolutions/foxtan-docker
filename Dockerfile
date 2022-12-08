@@ -1,22 +1,29 @@
-FROM node:slim
+# TODO: pre-build `node-canvas`, remove `*-dev`, `node-gyp` and `python` from build
+
+FROM alpine:3.17
 WORKDIR /app
 
-# For apt:
-RUN apt update
-RUN apt install -y git
-RUN apt install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
-RUN apt install -y python3
-RUN apt install -y ffmpeg
+ENV TZ=UTC
+ENV PNPM_HOME=/root/.local/share/pnpm
+ENV PATH=$PATH:$PNPM_HOME
 
-# For apk:
-# RUN apk add --no-cache nodejs npm
-# RUN apk add --no-cache build-base g++ cairo-dev jpeg-dev pango-devbash imagemagick
-# RUN apk add --no-cache python
-# RUN apk add --no-cache ffmpeg
-# RUN npm i -g node-gyp
+RUN wget -O /bin/pnpm "https://github.com/pnpm/pnpm/releases/latest/download/pnpm-linuxstatic-x64" \
+ && chmod +x /bin/pnpm \
+ && echo "https://mirror.yandex.ru/mirrors/alpine/v3.17/main" > /etc/apk/repositories \
+ && echo "https://mirror.yandex.ru/mirrors/alpine/v3.17/community" >> /etc/apk/repositories \
+ && apk add --no-cache nodejs \
+    bash build-base cairo-dev jpeg-dev pango-dev font-noto \
+    python3 \
+    ffmpeg \
+ && pnpm add -g node-gyp knex
+
+COPY ./docker-entrypoint.sh /
+COPY ./foxtan/scripts ./scripts
+COPY ./foxtan/app/Infrastructure/Config.js ./app/Infrastructure/
+COPY ./foxtan/package.json ./foxtan/pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+EXPOSE 6749/tcp
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 COPY ./foxtan/ ./config.js ./
-RUN npm install
-EXPOSE 6749
-COPY ./docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]

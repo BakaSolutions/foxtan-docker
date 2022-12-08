@@ -1,1 +1,9 @@
+**/.idea
+**/.nyc_output
 **/node_modules
+
+# Engine's output
+foxtan/res/**/*
+foxtan/src/*.*
+foxtan/src/thumb/*.*
+foxtan/config*
