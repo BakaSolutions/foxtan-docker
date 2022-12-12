@@ -3,7 +3,12 @@ version: "3"
 services:
   foxtan:
     container_name: foxtan
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+      args:
+        NODE_ENV: production
     image: bakaso/foxtan
     restart: unless-stopped
     volumes:
@@ -13,6 +18,7 @@ services:
       FOXTAN_DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@foxtan-db:5432/foxtantest
       FOXTAN_REDIS_URL: redis://foxtan-redis:6379
       DEBUG: ${DEBUG}
+      NODE_ENV: production
     ports:
       - "6749:6749"
     depends_on:

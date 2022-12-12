@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  foxtan:
+    container_name: foxtan
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+      args:
+        NODE_ENV: development
+    image: bakaso/foxtan:development
+    #restart: unless-stopped
+    volumes:
+      - ./foxtan/:/app/
+      - ./config.js:/app/config.js
+      - foxtan-files:/app/public/
+      - /app/node_modules/
+    environment:
+      FOXTAN_EXTERNAL_URL: http://localhost:6749
+      FOXTAN_DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@foxtan-db:5432/foxtantest
+      FOXTAN_REDIS_URL: redis://foxtan-redis:6379
+      DEBUG: ${DEBUG}
+      NODE_ENV: development
+    ports:
+      - "6749:6749"
+      - "9229:9229"
+    depends_on:
+      - postgresql
+      - redis
+    networks:
+      - foxnat
