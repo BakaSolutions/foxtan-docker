@@ -42,6 +42,9 @@ RUN pnpm fetch \
 
 # Build dirty image (dev packages, hot reload)
 FROM intermediate as development
+RUN apk add \
+    ffmpeg \
+    font-noto
 EXPOSE 6749/tcp 9229/tcp
 COPY ./docker-entrypoint.dev.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
