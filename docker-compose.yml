@@ -11,8 +11,12 @@ services:
         NODE_ENV: production
     image: bakaso/foxtan
     restart: unless-stopped
+    tmpfs:
+      - /run
+      - /tmp
     volumes:
       - foxtan-files:/app/public/
+      - /app/node_modules/
     environment:
       FOXTAN_EXTERNAL_URL: http://localhost:6749
       FOXTAN_DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@foxtan-db:5432/foxtantest

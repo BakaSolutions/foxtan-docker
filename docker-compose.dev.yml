@@ -11,6 +11,9 @@ services:
         NODE_ENV: development
     image: bakaso/foxtan:development
     #restart: unless-stopped
+    tmpfs:
+      - /run
+      - /tmp
     volumes:
       - ./foxtan/:/app/
       - ./config.js:/app/config.js
