@@ -18,7 +18,7 @@ services:
       - ./foxtan/:/app/
       - ./config.js:/app/config.js
       - foxtan-files:/app/public/
-      - /app/node_modules/
+      - foxtan-node_modules:/app/node_modules/
     environment:
       FOXTAN_EXTERNAL_URL: http://localhost:6749
       FOXTAN_DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@foxtan-db:5432/foxtantest
