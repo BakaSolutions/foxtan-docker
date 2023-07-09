@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile
       target: production
       args:
+        ALPINE_VERSION: ${ALPINE_VERSION}
+        PNPM_VERSION: ${PNPM_VERSION}
         NODE_ENV: production
     image: bakaso/foxtan
     restart: unless-stopped

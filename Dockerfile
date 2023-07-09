@@ -1,12 +1,14 @@
 # Define Alpine repo and version
-ARG ALPINE_REPO=https://mirror.yandex.ru/mirrors/alpine/ \
-    ALPINE_VERSION=3.17 \
+ARG ALPINE_REPO=https://mirror.ungleich.ch/mirror/packages/alpine/ \
+    ALPINE_VERSION=3.18 \
+    PNPM_VERSION=8.6.6 \
     NODE_ENV=production
 
 # Download pnpm ( https://pnpm.io )
 FROM alpine:${ALPINE_VERSION} as preliminary
 WORKDIR /app
-RUN wget -O /bin/pnpm "https://github.com/pnpm/pnpm/releases/latest/download/pnpm-linuxstatic-x64" \
+ARG PNPM_VERSION
+RUN wget -O /bin/pnpm "https://github.com/pnpm/pnpm/releases/download/v${PNPM_VERSION}/pnpm-linuxstatic-x64" \
  && chmod +x /bin/pnpm
 # TODO: Fetch common packages, install them and drop cache
 
