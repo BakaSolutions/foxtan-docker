@@ -51,6 +51,7 @@ RUN pnpm fetch \
 FROM intermediate as development
 EXPOSE 6749/tcp 9229/tcp
 COPY ./docker-entrypoint.dev.sh /docker-entrypoint.sh
+RUN ["chmod", "+x", "/docker-entrypoint.sh"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 
@@ -78,6 +79,7 @@ RUN echo "${ALPINE_REPO}v${ALPINE_VERSION}/main" > /etc/apk/repositories \
     vips-poppler
 EXPOSE 6749/tcp
 COPY ./docker-entrypoint.sh /
+RUN ["chmod", "+x", "/docker-entrypoint.sh"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 COPY --from=preliminary /bin/pnpm /bin/pnpm
 COPY --from=intermediate $PNPM_HOME/store/ $PNPM_HOME/store/
