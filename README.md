@@ -26,9 +26,9 @@ For Windows: `.\start.dev.bat`
 
 #### Pnpm
 Docker caches layers that have not been modified in the Dockerfile.
-In this file the link always points to the latest version of [pnpm](https://pnpm.io).
-Sometimes it is necessary to update the `preliminary` layer by clearing the cache.
-To do this, run the following command:
+In this file the link always points to the predefined release of [pnpm on GitHub](https://github.com/pnpm/pnpm/releases/).
+It is necessary to update the `preliminary` layer by clearing the cache after bumping the version.
+The following command allows you to do this:
 ```shell
 docker build . --target preliminary --no-cache
 ```
