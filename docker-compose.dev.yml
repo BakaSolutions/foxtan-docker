@@ -22,7 +22,7 @@ services:
       - foxtan-files:/app/public/
       - foxtan-node_modules:/app/node_modules/
     environment:
-      FOXTAN_EXTERNAL_URL: http://localhost:6749
+      FOXTAN_EXTERNAL_URL: ${FOXTAN_EXTERNAL_URL:-http://localhost:6749}
       FOXTAN_DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@foxtan-db:5432/foxtantest
       FOXTAN_REDIS_URL: redis://foxtan-redis:6379
       DEBUG: ${DEBUG}
